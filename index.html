@@ -746,7 +746,9 @@
                         let btnId = side===0 ? 'btn-L' : 'btn-R';
                         
                         let el = document.getElementById(imgId);
-                        if(el) el.src = IMG_CHEST_OPEN;
+                        if(el && current_phase === 'training') {
+                            el.src = IMG_CHEST_OPEN;
+                        }
                         
                         if(current_phase === 'training') {
                             if(rew > 0) {
@@ -915,7 +917,12 @@
             document.getElementById('score-board').style.display = 'none'; 
         }
     });
-    timeline.push({ type: jsPsychHtmlButtonResponse, stimulus: `<div class="instruction-wrap"><p>ここからは、獲得したコインの枚数が分からなくなります。<br>また今度はサポートメンバーが2人同時に現れます。先ほどと同じように、なるべくたくさんのコインを獲得してください。準備ができたら「開始」を押してください。</p></div>`, choices: ['開始'] });
+    timeline.push({ type: jsPsychHtmlButtonResponse, stimulus: `<div class="instruction-wrap">
+        <p>ここからは、宝箱が開いても、そのことが画面上に表示されなくなり、獲得したコインの枚数も画面には表示されなくなります。</p>
+        <p>（※見えなくなるだけで、獲得したコインは裏で計算されています）</p>
+        <p>また今度はサポートメンバーが2人同時に現れます。先ほどと同じように、なるべくたくさんのコインを獲得してください。</p>
+        <p>準備ができたら「開始」を押してください。</p>
+        </div>`, choices: ['開始'] });
 
     function generateTestTrials() {
         let trials = [];
@@ -1104,7 +1111,6 @@
       stimulus: `<div class="instruction-wrap" style="text-align:center;">
           <p>すべての回答が完了しました。</p>
           <p>「データを保存する」を押して実験を終了してください。</p>
-          <p><span style="color:red;font-size:24px;font-weight:bold;">ブラウザを閉じずに</span>実験者にお声掛けください。</p>
       </div>`,
       choices: ['データを保存する'],
       on_finish: function() {
