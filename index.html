@@ -595,7 +595,7 @@
         }, on_finish: ()=> document.getElementById('score-board').style.display = 'none'
     };
     timeline.push(practice_cue1, practice_box1, practice_cue2, practice_box2);
-    timeline.push({ type: jsPsychHtmlButtonResponse, stimulus: `<div class="instruction-wrap"><p>それでは本番です。準備ができたら「開始」を押してください。</p></div>`, choices: ['開始'] });
+    timeline.push({ type: jsPsychHtmlButtonResponse, stimulus: `<div class="instruction-wrap"><p>それでは本番です。なるべくたくさんのコインを獲得してください。準備ができたら「開始」を押してください。</p></div>`, choices: ['開始'] });
 
     function generateTrainingTrials() {
         let trials = [];
@@ -816,6 +816,7 @@
                 }
 
                 // === ここからトレーニングフェーズの記録 ===
+                // === ここからトレーニングフェーズの記録 ===
                 if (current_phase === 'training') {
                     summary_data.total_clicks_training++;
                     window.cycle_stats.clicks++; 
@@ -841,8 +842,7 @@
                         character: d.char,
                         hint_side: hint_side === 0 ? 'left' : 'right', // キャラが指示した方向
                         followed_hint: is_follow, // 指示に従ったか（TRUE/FALSE）
-                        reward_val: d.rewL > 0 || d.rewR > 0 ? (d.rewL > 0 ? d.rewL : d.rewR) : 0, 
-                        lost_val: rew, 
+                        reward_val: rew, // ★利益版なので獲得した金額を記録
                         cod: is_switch, rt: now - window.choice_start_time 
                     });
 
@@ -868,9 +868,11 @@
                     if (side === d.red_dir) summary_data.follow_red_test++; else summary_data.unfollow_red_test++;
                     if (side === d.blue_dir) summary_data.follow_blue_test++; else summary_data.unfollow_blue_test++;
 
-                    // テストフェーズのデータ書き込み
+                    // テストフェーズの詳細なデータ書き込み
                     jsPsych.data.write({ 
-                        phase: current_phase, cycle: d.cycle, block: d.block, trial: trial_cursor, 
+                        phase: current_phase, 
+                        test_condition: d.test_condition,
+                        cycle: d.cycle, block: d.block, trial: trial_cursor, 
                         response_side: side === 0 ? 'left' : 'right', // ★選択した方向
                         
                         accurate_hint_side: acc_dir === 0 ? 'left' : 'right', // ★正確な人が指示した方向
@@ -885,7 +887,7 @@
                         red_hint_side: d.red_dir === 0 ? 'left' : 'right', 
                         blue_hint_side: d.blue_dir === 0 ? 'left' : 'right',
                         red_val: d.red_val, blue_val: d.blue_val,
-                        lost_val: rew, 
+                        reward_val: rew, // ★利益版なので獲得した金額を記録
                         cod: is_switch, rt: now - window.choice_start_time 
                     });
                 }
@@ -944,7 +946,7 @@
             document.getElementById('score-board').style.display = 'none'; 
         }
     });
-    timeline.push({ type: jsPsychHtmlButtonResponse, stimulus: `<div class="instruction-wrap"><p>ここからは、獲得したコインの枚数が分からなくなります。<br>また今度はサポートメンバーが2人同時に現れます。先ほどと同じように、より多くのコインが入っていると思う宝箱を選んで開けてください。準備ができたら「開始」を押してください。</p></div>`, choices: ['開始'] });
+    timeline.push({ type: jsPsychHtmlButtonResponse, stimulus: `<div class="instruction-wrap"><p>ここからは、獲得したコインの枚数が分からなくなります。<br>また今度はサポートメンバーが2人同時に現れます。先ほどと同じように、なるべくたくさんのコインを獲得してください。準備ができたら「開始」を押してください。</p></div>`, choices: ['開始'] });
 
     function generateTestTrials() {
         let trials = [];
