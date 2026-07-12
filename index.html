@@ -695,7 +695,8 @@
             window.choice_start_time = Date.now();
             window.cycle_stats = {
                 clicks: 0, follow: 0, unfollow: 0, points_earned: 0,
-                follow_acc: 0, unfollow_acc: 0, follow_inacc: 0, unfollow_inacc: 0
+                follow_acc: 0, unfollow_acc: 0, follow_inacc: 0, unfollow_inacc: 0,
+                points_earned_follow_acc: 0
             };
         },
         on_load: function(){
@@ -745,11 +746,12 @@
         
                         let hint_side = d.text.includes("左") ? 0 : 1; 
                         if (side === hint_side) {
-                            if (d.char === 'accurate') summary_data.points_earned_follow_accurate_training += rew;
-                            else if (d.char === 'inaccurate') summary_data.points_earned_follow_inaccurate_training += rew;
-                        } else {
-                            if (d.char === 'accurate') summary_data.points_earned_unfollow_accurate_training += rew;
-                            else if (d.char === 'inaccurate') summary_data.points_earned_unfollow_inaccurate_training += rew;
+                            if (d.char === 'accurate') {
+                                summary_data.points_earned_follow_accurate_training += rew;
+                                window.cycle_stats.points_earned_follow_acc += rew; // ★追加
+                            } else if (d.char === 'inaccurate') {
+                                summary_data.points_earned_follow_inaccurate_training += rew;
+                            }
                         }
                         showFloatingPoints(rew, side, btnId);
                     } else if (current_phase === 'test') {
@@ -859,6 +861,7 @@
                 data.cycle_follow_hint = window.cycle_stats.follow;
                 data.cycle_unfollow_hint = window.cycle_stats.unfollow;
                 data.cycle_earned_points = window.cycle_stats.points_earned;
+                data.cycle_earned_points_follow_accurate = window.cycle_stats.points_earned_follow_acc;
             } else if (current_phase === 'test') {
                 data.cycle_follow_accurate = window.cycle_stats.follow_acc;
                 data.cycle_unfollow_accurate = window.cycle_stats.unfollow_acc;
