@@ -317,10 +317,10 @@
         points_earned_follow_inaccurate_test: 0,
         points_earned_unfollow_accurate_test: 0,
         points_earned_unfollow_inaccurate_test: 0,
-        follow_red_test: 0,
-        follow_blue_test: 0,
-        unfollow_red_test: 0,
-        unfollow_blue_test: 0,
+        follow_accurate_test: 0,
+        unfollow_accurate_test: 0,
+        follow_inaccurate_test: 0,
+        unfollow_inaccurate_test: 0,
         // Case A, Case B 用の詳細集計
         caseA_total_clicks: 0,
         caseA_follow_accurate_clicks: 0,
@@ -825,8 +825,9 @@
 
                     if (followed_acc) window.cycle_stats.follow_acc++; else window.cycle_stats.unfollow_acc++;
                     if (followed_inacc) window.cycle_stats.follow_inacc++; else window.cycle_stats.unfollow_inacc++;
-                    if (side === d.red_dir) summary_data.follow_red_test++; else summary_data.unfollow_red_test++;
-                    if (side === d.blue_dir) summary_data.follow_blue_test++; else summary_data.unfollow_blue_test++;
+                    // ★ 赤/青ではなく、正確/不正確の変数に加算するよう変更
+                    if (followed_acc) summary_data.follow_accurate_test++; else summary_data.unfollow_accurate_test++;
+                    if (followed_inacc) summary_data.follow_inaccurate_test++; else summary_data.unfollow_inaccurate_test++;
 
                     jsPsych.data.write({ 
                         event_type: 'click', // ★これがクリックごとの目印
@@ -1133,14 +1134,11 @@
               summary_data.unfollow_inaccurate_training : 0,
               total_clicks_test: typeof summary_data !== 'undefined' ?
               summary_data.total_clicks_test : 0,
-              follow_red_test: typeof summary_data !== 'undefined' ?
-              summary_data.follow_red_test : 0,
-              follow_blue_test: typeof summary_data !== 'undefined' ?
-              summary_data.follow_blue_test : 0,
-              unfollow_red_test: typeof summary_data !== 'undefined' ?
-              summary_data.unfollow_red_test : 0,
-              unfollow_blue_test: typeof summary_data !== 'undefined' ?
-              summary_data.unfollow_blue_test : 0,
+              total_clicks_test: typeof summary_data !== 'undefined' ? summary_data.total_clicks_test : 0,
+              follow_accurate_test: typeof summary_data !== 'undefined' ? summary_data.follow_accurate_test : 0,
+              unfollow_accurate_test: typeof summary_data !== 'undefined' ? summary_data.unfollow_accurate_test : 0,
+              follow_inaccurate_test: typeof summary_data !== 'undefined' ? summary_data.follow_inaccurate_test : 0,
+              unfollow_inaccurate_test: typeof summary_data !== 'undefined' ? summary_data.unfollow_inaccurate_test : 0,
               
               caseA_total_clicks: typeof summary_data !== 'undefined' ? summary_data.caseA_total_clicks : 0,
               caseA_follow_accurate_clicks: typeof summary_data !== 'undefined' ? summary_data.caseA_follow_accurate_clicks : 0,
