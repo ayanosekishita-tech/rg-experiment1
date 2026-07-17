@@ -490,8 +490,8 @@
         type: jsPsychCallFunction,
         func: function(){
             // ▼▼▼ 手動設定エリア：キャラクターの色 ▼▼▼
-            experiment_data.inaccurate_color = 'red'; //20%
-            experiment_data.accurate_color = 'blue';  //80%
+            experiment_data.inaccurate_color = 'blue'; //20%
+            experiment_data.accurate_color = 'red';  //80%
             experiment_data.condition = 'gain';
             // ▲▲▲ 手動設定エリア ここまで ▲▲▲
 
@@ -574,8 +574,8 @@
     function generateTrainingTrials() {
         let trials = [];
         // 20サイクル分の手動設定エリア
-        let accurate_dirs = [0, 0, 1, 0, 1, 1, 1, 0, 0, 1, 0, 1, 0, 0, 1, 1, 0, 1, 1, 0];//80% S1
-        let inaccurate_dirs = [1, 0, 1, 1, 0, 0, 0, 1, 0, 1, 1, 0, 1, 1, 0, 0, 1, 0, 1, 0];//20% S2
+        let accurate_dirs = [1, 0, 1, 1, 0, 0, 0, 1, 0, 1, 1, 0, 1, 1, 0, 0, 1, 0, 1, 0];//80% S2
+        let inaccurate_dirs = [0, 0, 1, 0, 1, 1, 1, 0, 0, 1, 0, 1, 0, 0, 1, 1, 0, 1, 1, 0];//20% S1
 
         // 正確RPの正確性 (16回正解、4回不正解)
         let accurate_types = [];
